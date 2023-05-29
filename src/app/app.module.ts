@@ -5,8 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore'
+import { SharedModule } from './shared/shared.module';
+import { FeaturesModule } from './features/features.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -14,7 +17,10 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+    SharedModule,
+    FeaturesModule
   ],
   providers: [],
   bootstrap: [AppComponent],
