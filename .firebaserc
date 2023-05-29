@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "hospital-management-syst-2ac18": {
+      "hosting": {
+        "Hospital-Management-System": [
+          "hospital-management-syst-2ac18"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "hospital-management-syst-2ac18"
+  }
+}
