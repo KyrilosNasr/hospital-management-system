@@ -1,0 +1,104 @@
+<div class="wrapper m-2 mb-0">
+  <h1 mat-dialog-title>{{ title }}</h1>
+  <mat-divider></mat-divider>
+  <div mat-dialog-content [formGroup]="addDoctorForm">
+    <mat-grid-list cols="2" rowHeight="100px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Your Full Name</mat-label>
+          <input matInput placeholder="john ..." formControlName="name" />
+          <mat-error *ngIf="addDoctorForm.get('name')?.hasError('required')">
+            name is Required</mat-error>
+        </mat-form-field>
+
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Your Email</mat-label>
+          <input matInput placeholder="pat@example.com" formControlName="email"
+            required />
+          <mat-error *ngIf="addDoctorForm.get('email')?.hasError('required')">
+            email is Required</mat-error>
+          <mat-error *ngIf="addDoctorForm.get('email')?.hasError('email')">
+            please enter valid email</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Your Mobile Number</mat-label>
+          <input type="tel" matInput placeholder="01231231213" type="tel"
+            formControlName="mobile" />
+          <mat-error
+            *ngIf="addDoctorForm.get('mobile')?.hasError('invalid') && addDoctorForm.get('mobile')?.hasError('touched') ">
+            mobile is required </mat-error>
+          <mat-error *ngIf="addDoctorForm.get('mobile')?.hasError('minlength') ">
+            mobile Should be at least 10 </mat-error>
+          <mat-error *ngIf="addDoctorForm.get('mobile')?.hasError('maxlength')">you
+            entered more than 12 </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Your Qualifications</mat-label>
+          <input matInput placeholder="ex. MMBS"
+            formControlName="qualifications" />
+          <mat-error
+            *ngIf="addDoctorForm.get('qualifications')?.hasError('invalid') && addDoctorForm.get('qualifications')?.hasError('touched') ">
+            qualifications is required </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+       <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="department">
+            <mat-option *ngFor="let department of departments"
+              [value]="department">
+              {{ department }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-radio-group aria-label="Select Geender" color="primary"
+          formControlName="gender">
+          <label>Gender</label>
+          <br>
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+        </mat-radio-group>
+        <mat-error
+          *ngIf="addDoctorForm.get('gender')?.hasError('invalid') && addDoctorForm.get('gender')?.hasError('touched') ">
+          gender is required </mat-error>
+      </mat-grid-tile>
+
+
+       <mat-grid-tile>
+        <mat-form-field appearance="outline">
+            <mat-label>Your birthdate</mat-label>
+            <input matInput errorState="true" [matDatepicker]="picker" formControlName="birthdate">
+            <mat-hint *ngIf="addDoctorForm.get('birthdate')?.value == ''" >MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-error *ngIf="addDoctorForm.get('birthdate')?.hasError('required') || addDoctorForm.get('birthdate')?.hasError('invalid')">
+              birthdate is required and must be valid Date
+            </mat-error>
+          </mat-form-field>
+            <mat-datepicker #picker></mat-datepicker>
+          <!-- <input  matInput placeholder="12/7/1992"  formControlName="birthdate"/> -->
+      </mat-grid-tile>
+    </mat-grid-list>
+    <!-- <h3>works</h3> -->
+  </div>
+
+  <div align="end" mat-dialog-actions>
+    <button class="me-2" mat-button color="warn" (click)="closeDialog()">
+      close
+    </button>
+    <button mat-button color="primary" [disabled]="addDoctorForm.invalid"
+      (click)="addDoctor()">Add</button>
+  </div>
+</div>

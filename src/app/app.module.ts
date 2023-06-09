@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore'
 import { SharedModule } from './shared/shared.module';
 import { FeaturesModule } from './features/features.module';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,7 +21,8 @@ import { FeaturesModule } from './features/features.module';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     SharedModule,
-    FeaturesModule
+    FeaturesModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

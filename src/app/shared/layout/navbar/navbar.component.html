@@ -5,9 +5,9 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+      <a (click)="getCurrentACtiveLink()" mat-list-item [activated]="this.currentActive.includes('main')" routerLink="dashboard/main"><mat-icon  matListItemIcon>home</mat-icon> Main</a>
+      <a (click)="getCurrentACtiveLink()" mat-list-item routerLink="/dashboard/patient"[activated]="this.currentActive.includes('/patient')"> <mat-icon  matListItemIcon>personal_injury</mat-icon> Patient</a>
+      <a (click)="getCurrentACtiveLink()" mat-list-item routerLink="/dashboard/doctor" [activated]="this.currentActive.includes('/doctor')" > <mat-icon  matListItemIcon>diversity_1</mat-icon> Doctor</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -23,6 +23,9 @@
       <span>Hospital-Management-System</span>
     </mat-toolbar>
     <!-- Add Content Here -->
-    <router-outlet></router-outlet>
+    <div class="m-5">
+      <router-outlet></router-outlet>
+    </div>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
