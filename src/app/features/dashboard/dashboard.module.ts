@@ -17,6 +17,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSortModule } from '@angular/material/sort';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddDoctorComponent } from './doctors/components/add-doctor/add-doctor.component';
@@ -50,6 +51,7 @@ import { PatientComponent } from './patient/patient.component';
     MatTableModule,
     MatPaginatorModule,
     MatMenuModule,
+    MatSortModule,
     ReactiveFormsModule,
     FormsModule,
   ],

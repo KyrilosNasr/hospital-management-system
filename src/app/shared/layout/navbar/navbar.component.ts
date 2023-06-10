@@ -28,16 +28,13 @@ export class NavbarComponent {
   }
   getCurrentACtiveLink(){
     let active = this.router.url
-    console.log(active, 'starts');
     
     this.router.events.subscribe((event)=>{
       if (event instanceof NavigationStart) {
-        console.log(event.url, ' 1');
         
     }
       if (event instanceof NavigationEnd) {
         this.currentActive = event.url;
-        console.log(this.currentActive , ' 2');
       }
   })
       
