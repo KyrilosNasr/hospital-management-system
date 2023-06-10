@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { MatCardModule } from '@angular/material/card';
@@ -55,5 +55,8 @@ import { PatientComponent } from './patient/patient.component';
     ReactiveFormsModule,
     FormsModule,
   ],
+  providers: [
+    DatePipe
+  ]
 })
 export class DashboardModule {}

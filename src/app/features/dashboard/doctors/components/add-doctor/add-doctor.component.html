@@ -78,11 +78,11 @@
 
 
        <mat-grid-tile>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" >
             <mat-label>Your birthdate</mat-label>
             <input matInput errorState="true" [matDatepicker]="picker" formControlName="birthdate">
             <mat-hint *ngIf="addDoctorForm.get('birthdate')?.value == ''" >MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle  matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-error *ngIf="addDoctorForm.get('birthdate')?.hasError('required') || addDoctorForm.get('birthdate')?.hasError('invalid')">
               birthdate is required and must be valid Date
             </mat-error>
@@ -99,6 +99,6 @@
       close
     </button>
     <button mat-button color="primary" [disabled]="addDoctorForm.invalid"
-      (click)="addDoctor()">Add</button>
+      (click)="addDoctor()">{{ buttonName }}</button>
   </div>
 </div>

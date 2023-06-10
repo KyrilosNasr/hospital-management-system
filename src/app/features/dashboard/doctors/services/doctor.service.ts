@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
-import { DoctorDetails } from '../interfaces/doctor';
+import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
+import { DoctorDetails } from '../interfaces/doctor-details.interface';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class DoctorService {
 
-   constructor( private af: AngularFirestore) { }
+   constructor( private afs: AngularFirestore) { }
 
-  addDoctor(doctor: DoctorDetails){
-    doctor.id = this.af.createId();
-    return this.af.collection<any>("Doctors/").add(doctor);
+  addDoctor(doctor: DoctorDetails): Promise<DocumentReference<DoctorDetails>>{
+    doctor.id = this.afs.createId();
+    return this.afs.collection<DoctorDetails>("Doctors/").add(doctor);
   }
 
-  getAllDoctors(): Observable<DocumentChangeAction<DoctorDetails>[]> {
-    return this.af.collection<DoctorDetails>('/Doctors').snapshotChanges();
+  getAllDoctors(): Observable<DoctorDetails[]> {
+    return this.afs.collection<DoctorDetails>('/Doctors').valueChanges();
+  }
+
+  updateDoctor(doctor: DoctorDetails): Promise<void>{
+    return this.afs.doc("Doctors/" + doctor.id).update(doctor);
+  }
+
+  deleteDoctor(doctorId:string): void{
+    this.afs.doc("Doctors/" + doctorId).delete();
   }
 }
