@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentChangeAction, DocumentReference } from '@angular/fire/compat/firestore';
 import { DoctorDetails } from '../interfaces/doctor-details.interface';
 import { Observable } from 'rxjs';
 @Injectable({
@@ -14,15 +14,19 @@ export class DoctorService {
     return this.afs.collection<DoctorDetails>("Doctors/").add(doctor);
   }
 
-  getAllDoctors(): Observable<DoctorDetails[]> {
-    return this.afs.collection<DoctorDetails>('/Doctors').valueChanges();
+  getAllDoctors(): Observable<DocumentChangeAction<DoctorDetails>[]> {
+    return this.afs.collection<DoctorDetails>('/Doctors').snapshotChanges();
+  }
+
+  getDoctorDetails(doctorId: string | null): Observable<DoctorDetails | undefined>{
+    return this.afs.doc<DoctorDetails>("Doctors/" + doctorId).valueChanges();
   }
 
   updateDoctor(doctor: DoctorDetails): Promise<void>{
     return this.afs.doc("Doctors/" + doctor.id).update(doctor);
   }
 
-  deleteDoctor(doctorId:string): void{
-    this.afs.doc("Doctors/" + doctorId).delete();
+    deleteDoctor(id:string): Promise<void>{
+   return this.afs.doc('/Doctors/'+id).delete();
   }
 }

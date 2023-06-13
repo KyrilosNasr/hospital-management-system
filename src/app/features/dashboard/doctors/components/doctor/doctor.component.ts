@@ -1,13 +1,15 @@
 import { DoctorDetails } from '../../interfaces/doctor-details.interface';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AddDoctorComponent } from '../add-doctor/add-doctor.component';
 import { DoctorService } from '../../services/doctor.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { DatePipe } from '@angular/common';
+import { DeleteDoctorComponent } from '../delete-doctor/delete-doctor.component';
+import { DoctorFormComponent } from '../doctor-form/doctor-form.component';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -18,21 +20,24 @@ import { DatePipe } from '@angular/common';
 export class DoctorComponent implements OnInit {
   displayedColumns: string[] = ['name', 'mobile', 'email', 'gender', 'department', 'actions'];
   dataSource!: MatTableDataSource<DoctorDetails>;
+  doctorsList:DoctorDetails[] = [];
 
+  doctorsSub!: Subscription;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  doctorsList:DoctorDetails[] = [];
   constructor ( public dialog: MatDialog, 
     private doctorService: DoctorService,
-    private datePipe: DatePipe,
+    private router: Router,
     private _snackBar: MatSnackBar ){
       // this.getAllDoctors();
     }
 
     ngOnInit(){
-      this.getAllDoctors();      
+      this.getAllDoctors();     
     }
+
+
   addDoctor(){
     const dialogconfig = new MatDialogConfig()
     dialogconfig.width = '50%';
@@ -45,7 +50,7 @@ export class DoctorComponent implements OnInit {
       title:'add new doctor'
     }
     dialogconfig.data.buttonName = ' ADD ';
-    const dialogRef = this.dialog.open(AddDoctorComponent,dialogconfig);
+    const dialogRef = this.dialog.open(DoctorFormComponent,dialogconfig);
 
     dialogRef.afterClosed().subscribe((data: DoctorDetails) => {
       if(data){
@@ -72,7 +77,7 @@ export class DoctorComponent implements OnInit {
     
     dialogconfig.data.title = "Edit Doctor";
     dialogconfig.data.buttonName = 'update';
-    const dialogRef = this.dialog.open(AddDoctorComponent,dialogconfig);
+    const dialogRef = this.dialog.open(DoctorFormComponent,dialogconfig);
 
     dialogRef.afterClosed().subscribe((data: DoctorDetails) => {
       if(data){
@@ -83,16 +88,48 @@ export class DoctorComponent implements OnInit {
 
   };
 
+  deleteDoctor(doctor: DoctorDetails) {
+    if (doctor.id == null || doctor.name == null) {
+      return;
+    }
+    
+    const dialogconfig = new MatDialogConfig()
+    dialogconfig.width = '20%';
+    
+    
+    dialogconfig.disableClose = true;
+    dialogconfig.autoFocus = true;
+    dialogconfig.data = doctor;
+    dialogconfig.data.birthdate = doctor.birthdate;
+    
+    dialogconfig.data.title = "delete Doctor";
+    dialogconfig.data.buttonName = 'delete';
+    dialogconfig.data.doctorName = doctor.name;
+    const dialogRef = this.dialog.open(DeleteDoctorComponent, dialogconfig);
+    
+    dialogRef.afterClosed().subscribe((data: DoctorDetails) => {
+      if (data) {        
+        this.doctorService.deleteDoctor(data.id)
+        this.openSnackBar("Doctor " + data.name +" Deleted successfully!", "OK")
+      }
+    })
+
+  };
+  
   getAllDoctors(){
-    this.doctorService.getAllDoctors().subscribe((data)=>{
-      this.doctorsList = data
+  this.doctorsSub = this.doctorService.getAllDoctors().subscribe((data)=>{
+      this.doctorsList = data.map((e)=>{
+        let data = e.payload.doc.data();
+        data.id= e.payload.doc.id;
+        return data;        
+      })      
       this.dataSource = new MatTableDataSource(this.doctorsList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })  
   }
 
-    openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
 
@@ -104,6 +141,16 @@ export class DoctorComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+
+  viewDoctor(doctor:DoctorDetails){
+    window.open('/dashboard/doctor/doctor-details/'+doctor.id,'_blank')
+    // this.router.navigate([''], { queryParams: [doctor.id] });
+  }
+
+  ngOnDestroy(){
+    this.doctorsSub.unsubscribe();
   }
  
 }

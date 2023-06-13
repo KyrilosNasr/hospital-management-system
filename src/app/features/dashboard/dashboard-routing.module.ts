@@ -9,10 +9,11 @@ const routes: Routes = [
   // {path:'', redirectTo:'/main',pathMatch:'full'},
   {
     path: '',  component: NavbarComponent, children: [
+      { path: 'doctor', loadChildren: ()=> import ('./doctors/doctors.module').then((d)=>d.DoctorsModule)  },
       { path: 'main', component: MainComponent },
-      { path: 'doctor', component: DoctorComponent },
       { path: 'patient', component: PatientComponent }
-    ] }
+    ]
+  }
 ];
 
 @NgModule({

@@ -1,0 +1,28 @@
+<ng-container *ngIf="doctorDetails">
+    <mat-card class="text-center w-50">
+        <mat-card-title class="fs-2 fw-bold my-2">
+         {{ doctorDetails.name | titlecase }}
+        </mat-card-title>
+        <mat-card-subtitle class="text-center mb-2">
+           <span class="text-secondary fw-bolder" >Qualification : </span> {{ doctorDetails.qualifications }}
+        </mat-card-subtitle>
+        <mat-divider></mat-divider>
+
+        <div class="d-flex justify-content-center pt-3">
+            <div class="text-center">
+                <mat-card-content>
+                    <span class="fw-bolder"> Email : </span> {{ doctorDetails.email }} <br>
+                    <span class="fw-bolder"> Mobile : </span> {{ doctorDetails.mobile }} 
+                </mat-card-content>
+            </div>
+            <div>
+                <mat-card-content>
+                    <span class="fw-bolder">Gender : </span> {{ doctorDetails.gender }} <br>
+                    <span class="fw-bolder">Department : </span> {{ doctorDetails.department }} 
+                </mat-card-content>
+            </div>
+
+        </div>
+        
+    </mat-card>
+</ng-container>
