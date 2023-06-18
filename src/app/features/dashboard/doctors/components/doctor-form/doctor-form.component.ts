@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Birthdate, MatDialogData } from '../../interfaces/doctor-details.interface';
+import { Birthdate, DoctorDetails } from '../../interfaces/doctor-details.interface';
 
 @Component({
   selector: 'app-doctor-form',
@@ -9,8 +9,8 @@ import { Birthdate, MatDialogData } from '../../interfaces/doctor-details.interf
   styleUrls: ['./doctor-form.component.scss']
 })
 export class DoctorFormComponent {
-  title !: string;
-  buttonName!: string;
+  title: string | undefined;
+  buttonName: string | undefined;
 
   addDoctorForm!: FormGroup;
 
@@ -27,19 +27,18 @@ export class DoctorFormComponent {
   departments: string[] = ['Orthopedics', 'Cardiology', 'Otorhinolaryngology', 'Ophthalmology', 'Psychiatry', 'Internal medicine', 'Radiology', 'Surgery', 'Pediatrics', 'Neurology', 'Urology', 'Anesthesiology', 'Nephrology', 'Neurosurgery', 'Gastroenterology', 'Pulmonology', 'General surgery', 'Intensive care medicine', 'Oncology', 'Pathology', 'Emergency medicine', 'Neonatology', 'Hematology', 'Pharmacy', 'Physical medicine and rehabilitation', 'Vascular surgery', 'Geriatrics', 'Gynaecology', 'Cardiac surgery', 'Outpatient department', 'Nuclear medicine', 'Infectious diseases', 'Clinical pathology', 'Intensive care unit', 'operating room', 'Casualty department']
   constructor(
     public dialogRef: MatDialogRef<DoctorFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: MatDialogData,
+    @Inject(MAT_DIALOG_DATA) public data: DoctorDetails,
     private fb: FormBuilder,
   ) {
     if (data) {
-      this.title = data.title;
-      this.buttonName = data.buttonName;
+      this.title = data.matDialogConfig?.title;
+      this.buttonName = data.matDialogConfig?.buttonName;
       this.id = data.id;
       this.name = data.name;
       this.email = data.email;
       this.mobile = data.mobile;
       this.gender = data.gender;
       this.birthdate = this.convertToDate(data.birthdate);
-
       this.qualifications = data.qualifications;
       this.department = data.department;
     }
@@ -75,7 +74,6 @@ export class DoctorFormComponent {
     let control = this.accessDoctorForm.get('birthdate')?.value
   }
 
-  // convert timestamp to Date object
   convertToDate(timestamp: Birthdate | Date): Date {
     if (typeof timestamp === 'object' && 'seconds' in timestamp && 'nanoseconds' in timestamp) {
       const milliseconds = timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000);

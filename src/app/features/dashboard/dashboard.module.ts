@@ -3,20 +3,20 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
 import { MainComponent } from './main/main.component';
-import { PatientComponent } from './patient/patient.component';
 import { DoctorsModule } from './doctors/doctors.module';
+import { PatientsModule } from './patients/patients.module';
 
 
 @NgModule({
   declarations: [
-    PatientComponent,
     MainComponent,
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    DoctorsModule
-  ],
+    DoctorsModule,
+    PatientsModule
+    ],
   providers: [
     DatePipe
   ]

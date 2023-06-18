@@ -1,0 +1,88 @@
+<div class="wrapper m-2 mb-0">
+  <h1 mat-dialog-title>{{ title }}</h1>
+  <mat-divider></mat-divider>
+  <div mat-dialog-content [formGroup]="addPatientForm">
+    <mat-grid-list cols="2" rowHeight="100px">
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Your Full Name</mat-label>
+          <input matInput placeholder="john ..." formControlName="patientName" />
+          <mat-error *ngIf="addPatientForm.get('patientName')?.hasError('required')">
+            patientName is Required</mat-error>
+        </mat-form-field>
+
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Your Mobile</mat-label>
+          <input matInput placeholder="9865452152" formControlName="mobile" required/>
+          <mat-error *ngIf="addPatientForm.get('mobile')?.hasError('required')">
+            email is Required</mat-error>
+          <mat-error *ngIf="addPatientForm.get('mobile')?.hasError('mobile')">
+            please enter valid mobile number</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-radio-group aria-label="Select Geender" color="primary"
+          formControlName="gender">
+          <label>Gender</label>
+          <br>
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+        </mat-radio-group>
+        <mat-error
+          *ngIf="addPatientForm.get('gender')?.hasError('invalid') && addPatientForm.get('gender')?.hasError('touched')">
+          gender is required </mat-error>
+      </mat-grid-tile>
+
+        <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Doctor</mat-label>
+          <mat-select formControlName="doctorName" name="doctorId" >
+            <mat-option *ngFor="let doctor of doctorsList" (click)="registerPatient()"
+              [value]="doctor.doctorId">
+              {{ doctor.doctorName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" >
+            <mat-label>Approval Date</mat-label>
+            <input matInput errorState="true" [matDatepicker]="picker" formControlName="approvalDate">
+            <mat-datepicker-toggle  matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-error *ngIf="addPatientForm.get('approvalDate')?.hasError('required') || addPatientForm.get('approvalDate')?.hasError('invalid')">
+              the approval date is required and must be valid Date
+            </mat-error>
+          </mat-form-field>
+            <mat-datepicker #picker></mat-datepicker>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+            <mat-label>Prescription</mat-label>
+            <input matInput
+                    placeholder="ex. medicines"
+                    formControlName="prescription"
+                    required>
+            <mat-error *ngIf="addPatientForm.get('prescription')?.invalid || addPatientForm.get('prescription')?.touched">Enter valid prescription </mat-error>
+          </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </div>
+
+  <div align="end" mat-dialog-actions>
+    <button class="me-2" mat-button color="warn" (click)="addPatient()">
+      Cancel
+    </button>
+
+    <button mat-button color="primary" type="submit"[disabled]="!validity"
+      (click)="addPatient()">
+      {{ buttonName | titlecase }}
+    </button>
+</div>

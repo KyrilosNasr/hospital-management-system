@@ -6,8 +6,8 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a (click)="getCurrentACtiveLink()" mat-list-item [activated]="this.currentActive.includes('main')" routerLink="dashboard/main"><mat-icon  matListItemIcon>home</mat-icon> Main</a>
-      <a (click)="getCurrentACtiveLink()" mat-list-item routerLink="/dashboard/patient"[activated]="this.currentActive.includes('/patient')"> <mat-icon  matListItemIcon>personal_injury</mat-icon> Patient</a>
-      <a (click)="getCurrentACtiveLink()" mat-list-item routerLink="/dashboard/doctor" [activated]="this.currentActive.includes('/doctor')" > <mat-icon  matListItemIcon>diversity_1</mat-icon> Doctor</a>
+      <a (click)="getCurrentACtiveLink()" mat-list-item routerLink="/dashboard/patients"[activated]="this.currentActive.includes('/patient')"> <mat-icon  matListItemIcon>personal_injury</mat-icon> Patient</a>
+      <a (click)="getCurrentACtiveLink()" mat-list-item routerLink="/dashboard/doctors" [activated]="this.currentActive.includes('/doctor')" > <mat-icon  matListItemIcon>diversity_1</mat-icon> Doctor</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatDialogData } from '../../interfaces/doctor-details.interface';
 import { DoctorService } from '../../services/doctor.service';
+import { DoctorDetails } from '../../interfaces/doctor-details.interface';
 
 @Component({
   selector: 'app-delete-doctor',
@@ -11,14 +11,14 @@ import { DoctorService } from '../../services/doctor.service';
 export class DeleteDoctorComponent {
 
   doctorName!:string;
-  title!:string;
+  title:string | undefined;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: MatDialogData,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DoctorDetails,
     public dialogRef: MatDialogRef<DeleteDoctorComponent>,
     private doctorService: DoctorService
   ){
     this.doctorName = data.name
-    this.title = data.title
+    this.title = data.matDialogConfig?.title;
   }
 
   deleteDoctor(){

@@ -1,3 +1,5 @@
+import { MatDialogConfigs } from "src/app/shared/interfaces/mat-dialog-configs";
+
 export interface DoctorDetails {
     id: string;
     name: string;
@@ -7,6 +9,7 @@ export interface DoctorDetails {
     birthdate: Birthdate | Date;
     email: string;
     qualifications: string;
+    matDialogConfig?:MatDialogConfigs
 }
 
 export interface Birthdate {
@@ -14,7 +17,3 @@ export interface Birthdate {
     nanoseconds: number;
 }
 
-export interface MatDialogData extends DoctorDetails{
-    title:string;
-    buttonName:string;
-}

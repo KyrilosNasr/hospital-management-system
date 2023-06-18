@@ -14,10 +14,6 @@ export class DoctorService {
     return this.afs.collection<DoctorDetails>("Doctors/").add(doctor);
   }
 
-  getAllDoctors(): Observable<DocumentChangeAction<DoctorDetails>[]> {
-    return this.afs.collection<DoctorDetails>('/Doctors').snapshotChanges();
-  }
-
   getDoctorDetails(doctorId: string | null): Observable<DoctorDetails | undefined>{
     return this.afs.doc<DoctorDetails>("Doctors/" + doctorId).valueChanges();
   }

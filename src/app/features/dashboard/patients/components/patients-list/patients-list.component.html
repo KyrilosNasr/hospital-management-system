@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col-sm-6 col-md-4 mt-3">
       <mat-card class="w-auto">
-        <mat-card-content class="text-center" (click)="addDoctor()">
+        <mat-card-content class="text-center" (click)="addPatient()">
           <button class="btn border border-0">
-            Add New Doctor
+            Add New Patient
             <br />
             <mat-icon class="cursor-pointer">group_add</mat-icon>
           </button>
@@ -13,26 +13,31 @@
       <mat-divider></mat-divider>
     </div>
   </div>
+  
   <mat-divider class="my-5"></mat-divider>
  
-  <mat-form-field>
+   <mat-form-field>
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. codeLogic" #input>
   </mat-form-field>
-  
-  <div class="mat-elevation-z8">
+
     <table mat-table [dataSource]="dataSource" matSort>
   
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.patientName}} </td>
       </ng-container>
   
       <ng-container matColumnDef="mobile">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>
-        <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
-      </ng-container>
-  
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>
+          <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
+        </ng-container>
+
+      <ng-container matColumnDef="doctor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Doctor Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.doctorName}} </td>
+        </ng-container>
+
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
         <td mat-cell *matCellDef="let row"> {{row.email}} </td>
@@ -43,26 +48,31 @@
         <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
       </ng-container>
   
-      <ng-container matColumnDef="department">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
-        <td mat-cell *matCellDef="let row"> {{row.department}} </td>
+      <ng-container matColumnDef="approvalDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Approval Date </th>
+        <td mat-cell *matCellDef="let row"> {{convertToDate(row.approvalDate)| date:'dd MMMM yyyy'}} </td>
       </ng-container>
   
+      <ng-container matColumnDef="prescription">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prescription </th>
+        <td mat-cell *matCellDef="let row"> {{row.prescription}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
         <td mat-cell *matCellDef="let row"> <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="viewDoctor(row)">
+            <button mat-menu-item (click)="viewPatient(row)">
               <mat-icon>open_in_new</mat-icon>
               <span>View</span>
             </button>
-            <button mat-menu-item edit (click)="editDoctor(row)">
+            <button mat-menu-item edit (click)="editPatient(row)">
               <mat-icon>edit</mat-icon>
               <span>Edit</span>
             </button>
-            <button mat-menu-item (click)="deleteDoctor(row)">
+            <button mat-menu-item (click)="deletePatient(row)">
               <mat-icon>delete</mat-icon>
               <span>Delete</span>
             </button>
@@ -80,5 +90,4 @@
     </table>
   
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-  </div>
 </div>

@@ -1,11 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DoctorsRoutingModule } from './doctors-routing.module';
-import { DeleteDoctorComponent } from './components/delete-doctor/delete-doctor.component';
-import { DoctorFormComponent } from './components/doctor-form/doctor-form.component';
-import { DoctorComponent } from './components/doctor/doctor.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -22,23 +16,47 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { DoctorDetailsComponent } from './components/doctor-details/doctor-details.component';
-import { MaterialModule } from 'src/app/shared/modules/material.module';
+
 
 
 @NgModule({
-  declarations: [
-    DoctorComponent,
-    DeleteDoctorComponent,
-    DoctorFormComponent,
-    DoctorDetailsComponent,
-  ],
+  declarations: [],
   imports: [
     CommonModule,
-    DoctorsRoutingModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    FormsModule,
+    MatCardModule,
+    MatIconModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatSortModule,
+  ],
+  exports:[
+    MatCardModule,
+    MatIconModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatSortModule,
   ]
 })
-export class DoctorsModule { }
+export class MaterialModule { }

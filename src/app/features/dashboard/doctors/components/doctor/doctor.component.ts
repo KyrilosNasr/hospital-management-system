@@ -10,6 +10,7 @@ import { DeleteDoctorComponent } from '../delete-doctor/delete-doctor.component'
 import { DoctorFormComponent } from '../doctor-form/doctor-form.component';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataService } from '../../../services/data.service';
 
 
 @Component({
@@ -28,9 +29,9 @@ export class DoctorComponent implements OnInit {
 
   constructor ( public dialog: MatDialog, 
     private doctorService: DoctorService,
+    private dataService:DataService,
     private router: Router,
     private _snackBar: MatSnackBar ){
-      // this.getAllDoctors();
     }
 
     ngOnInit(){
@@ -117,7 +118,7 @@ export class DoctorComponent implements OnInit {
   };
   
   getAllDoctors(){
-  this.doctorsSub = this.doctorService.getAllDoctors().subscribe((data)=>{
+  this.doctorsSub = this.dataService.getAllDoctors().subscribe((data)=>{
       this.doctorsList = data.map((e)=>{
         let data = e.payload.doc.data();
         data.id= e.payload.doc.id;
@@ -146,7 +147,6 @@ export class DoctorComponent implements OnInit {
 
   viewDoctor(doctor:DoctorDetails){
     window.open('/dashboard/doctor/doctor-details/'+doctor.id,'_blank')
-    // this.router.navigate([''], { queryParams: [doctor.id] });
   }
 
   ngOnDestroy(){
