@@ -126,7 +126,7 @@
           "builder": "@angular/fire:deploy",
           "options": {
             "prerender": false,
-            "ssr": false,
+            "ssr": true,
             "browserTarget": "Hospital-Management-System:build:production",
             "firebaseProject": "hospital-management-syst-2ac18",
             "firebaseHostingSite": "hospital-management-syst-2ac18"
